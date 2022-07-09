@@ -1,7 +1,5 @@
 package com.example.MyShopEE;
 
-import package_classes.FruitsLoader;
-
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -25,7 +23,12 @@ public class ServletHello extends HttpServlet {
 //        request.setAttribute("name", "Tom");
         String fruitName = request.getParameter("fruitname");
         if(fruitName!=null && !fruitName.isEmpty()) {
-            request.setAttribute("fruit", fruitsLoader.saveNewFruit(fruitName));
+            if(fruitName.substring(0,1).equals("-")) {
+                fruitName = fruitName.substring(1);
+                request.setAttribute("fruit", fruitsLoader.deleteFruit(fruitName));
+            } else {
+                request.setAttribute("fruit", fruitsLoader.saveNewFruit(fruitName));
+            }
         } else {
             request.setAttribute("fruit", "< empty >");
         }

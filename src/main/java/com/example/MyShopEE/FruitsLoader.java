@@ -1,4 +1,4 @@
-package package_classes;
+package com.example.MyShopEE;
 
 import java.sql.*;
 import java.util.*;
@@ -86,6 +86,33 @@ public class FruitsLoader {
             insertFruit = String.format(insertFruit, maxId, nameFruit);
             int rows = statement.executeUpdate(insertFruit);
             if(rows == 0) return "DB.Error.Insert";
+        } catch (SQLException ex) {
+            return "DB.SQL_Error : " + ex.getMessage();
+        }
+        return nameFruit;
+    }
+    public String deleteFruit(String nameFruit) {
+        // load Driver
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
+        } catch (Exception ex) {
+            return "DB.Class_Error : " + ex.getMessage();
+        }
+        // select - query
+        nameFruit = nameFruit.toLowerCase();
+//        int maxId = 0;
+//        int count = 0;
+        // connection
+        try (Connection connection = DriverManager.getConnection(_URL, _USERNAME, _USERPASS)) {
+            if(connection.isClosed()) {
+                return "DB.Close";
+            }
+            Statement statement = connection.createStatement();
+            // 1. delete  Fruit
+            String deleteFruit = "DELETE FROM mydbtest.fruits_table WHERE (name='%s');";
+            deleteFruit = String.format(deleteFruit, nameFruit);
+            int rows = statement.executeUpdate(deleteFruit);
+            if(rows == 0) return "DB.Error.Delete";
         } catch (SQLException ex) {
             return "DB.SQL_Error : " + ex.getMessage();
         }

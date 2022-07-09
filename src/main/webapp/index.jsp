@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="package_classes.FruitsLoader" %>
+<%@ page import="com.example.MyShopEE.FruitsLoader" %>
 <%
     FruitsLoader fruitsLoader = new FruitsLoader();
     fruitsLoader.loadFruits();
@@ -39,7 +39,7 @@
 </form>
 
 <hr />
-<p>New fruit: ${fruit}</p>
+<p>Fruit: ${fruit}</p>
 <p>Count <%= fruitsLoader.getCountOfFruits() %></p>
 
 </body>
